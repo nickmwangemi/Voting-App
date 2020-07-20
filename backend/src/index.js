@@ -9,14 +9,13 @@ const port = 4000
 
 setupMiddleware(app)
 
-setupRouter(app)
+async function start() {
+	const db = await setupDatabase()
+	setupRouter(app, db)
 
-setupDatabase()
-	.then((client) => {
-		setupRouter(app, client)
-
-		app.listen(port, () => {
-			console.log(`Server is running on port ${port}`)
-		})
+	app.listen(port, () => {
+		console.log(`Server is running on port ${port}`)
 	})
-	.catch(console.error)
+}
+
+start().catch(console.error)

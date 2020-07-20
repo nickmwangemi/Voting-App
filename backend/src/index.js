@@ -1,6 +1,7 @@
 const express = require('express')
-const setupMiddleware = require('./setup/middleware')
+const setupRouter = require('./setup/router')
 const setupDatabase = require('./setup/database')
+const setupMiddleware = require('./setup/middleware')
 
 const app = express()
 
@@ -8,9 +9,12 @@ const port = 4000
 
 setupMiddleware(app)
 
+setupRouter(app)
+
 setupDatabase()
 	.then((client) => {
-		console.log(client)
+		setupRouter(app, client)
+
 		app.listen(port, () => {
 			console.log(`Server is running on port ${port}`)
 		})

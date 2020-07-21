@@ -1,6 +1,6 @@
 const Mongodb = require('mongodb')
 
-const uri = 'mongodb://localhost/voting-app'
+const uri = process.env.DATABASE_URI
 
 module.exports = async () => {
 	const client = new Mongodb.MongoClient(uri, { useUnifiedTopology: true })
